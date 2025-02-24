@@ -1,0 +1,26 @@
+name: Danger Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  danger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install danger --save-dev
+
+      - name: Run Danger
+        uses: danger/danger-js@11.1.0
+        with:
+          dangerfile: Dangerfile.js
